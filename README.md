@@ -2,9 +2,19 @@
   <img src="apps/web/public/banva-logo.png" alt="Banva" width="120" />
 </p>
 
-# Banva
+<h1 align="center">Banva</h1>
 
-**Banva es una alternativa gratis y open source a Canva.** Diseñá presentaciones, posts para redes, videos, documentos, pizarras, hojas de cálculo, sitios web y correos desde el navegador, sin cuentas ni suscripciones, y con tus datos en tu propio servidor.
+<p align="center"><strong>Banva es una alternativa gratis y open source a Canva.</strong></p>
+
+<p align="center">
+  <a href="https://github.com/Albano-Bosquet/banva/releases/latest">
+    <img src="https://img.shields.io/github/v/release/Albano-Bosquet/banva?label=Descargar%20para%20Windows&style=for-the-badge&logo=windows&logoColor=white&color=0b9447" alt="Descargar Banva para Windows" height="44" />
+  </a>
+</p>
+
+<p align="center"><sub>Instalador para Windows 10 y 11 (64 bits) · gratis · sin cuentas</sub></p>
+
+Diseñá presentaciones, posts para redes, videos, documentos, pizarras, hojas de cálculo, sitios web y correos desde tu computadora, sin cuentas ni suscripciones, y con tus datos guardados en tu equipo.
 
 Está inspirado en las capacidades de Canva (ver `docs/ANALISIS_CANVA.md`), pero el código, los iconos, la paleta y las plantillas son originales: no se usa código ni recursos de Canva. Banva no está afiliado a Canva.
 
