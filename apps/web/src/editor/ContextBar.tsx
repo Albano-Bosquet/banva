@@ -8,6 +8,7 @@ import {
   type FrameElement,
   type GraphicElement,
   type GridElement,
+  type Page,
   type ShapeElement,
   type SolidElement,
   type SolidKind,
@@ -42,7 +43,7 @@ export function ContextBar({ onOpenPanel }: { onOpenPanel(p: PanelKey): void }) 
       <div className="context-bar">
         <span className="hint">Seleccioná un elemento o agregá uno desde el panel lateral.</span>
         <span className="spacer" />
-        <PlayButton pageId={page.id} />
+        <PlayButton page={page} />
       </div>
     );
   }
@@ -126,11 +127,18 @@ export function ContextBar({ onOpenPanel }: { onOpenPanel(p: PanelKey): void }) 
   );
 }
 
-function PlayButton({ pageId }: { pageId: string }) {
+function PlayButton({ page }: { page: Page }) {
+  // Sin entradas el botón no tendría nada que mostrar: se deshabilita y explica cómo agregarlas.
+  const has = page.elements.some((e) => e.visible && e.animation && ENTRANCE.includes(e.animation));
+  const title = has
+    ? 'Reproducir las animaciones de entrada de esta página'
+    : 'Esta página no tiene animaciones de entrada: seleccioná un elemento y elegí una en Animación (Aparecer, Elevar, Saltar o Deslizar)';
   return (
-    <button className="ghost" onClick={() => usePlayback.getState().play(pageId)} title="Reproducir las animaciones de entrada de esta página" data-testid="play-animations">
-      <Icon name="play" /> Reproducir
-    </button>
+    <span title={title}>
+      <button className="ghost" disabled={!has} onClick={() => usePlayback.getState().play(page.id)} data-testid="play-animations">
+        <Icon name="play" /> Reproducir
+      </button>
+    </span>
   );
 }
 

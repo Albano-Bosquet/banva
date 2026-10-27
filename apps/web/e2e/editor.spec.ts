@@ -158,3 +158,30 @@ test('editar texto y hacer clic fuera conserva el cambio', async ({ page }) => {
   await openLayers(page);
   expect(await layerNames(page)).toEqual(['Agregá un títu']);
 });
+
+test('Reproducir: deshabilitado sin animaciones de entrada y anima cuando hay una', async ({ page }) => {
+  await newDesign(page);
+  await page.getByTestId('rail-text').click();
+  await page.getByText('Agregar un título').click();
+  await page.keyboard.press('Escape');
+  await page.keyboard.press('Escape');
+  const play = page.getByTestId('play-animations');
+  await expect(play).toBeDisabled();
+  await page.evaluate(() => {
+    const ed = (globalThis as unknown as { __trazoEditor: { getState(): { doc: { pages: { elements: { id: string }[] }[] }; updateElements(ids: string[], p: object): void } } }).__trazoEditor.getState();
+    ed.updateElements([ed.doc.pages[0].elements[0].id], { animation: 'fade' });
+  });
+  await expect(play).toBeEnabled();
+  // Se registra la opacidad mínima en cada cuadro: la entrada arranca casi transparente.
+  await page.evaluate(() => {
+    const g = globalThis as unknown as { Konva: { stages: { findOne(s: string): { opacity(): number } }[] }; minOpacity: number };
+    g.minOpacity = 1;
+    const tick = () => {
+      g.minOpacity = Math.min(g.minOpacity, g.Konva.stages[0].findOne('.anim').opacity());
+      requestAnimationFrame(tick);
+    };
+    tick();
+  });
+  await play.click();
+  await expect.poll(() => page.evaluate(() => (globalThis as unknown as { minOpacity: number }).minOpacity)).toBeLessThan(0.5);
+});

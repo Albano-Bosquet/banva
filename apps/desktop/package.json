@@ -1,7 +1,7 @@
 {
   "name": "@trazo/desktop",
   "productName": "Banva",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "Banva: alternativa gratis y open source a Canva (app de escritorio)",
   "author": "Albano-Bosquet",
