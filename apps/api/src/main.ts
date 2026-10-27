@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { buildApp } from './app';
 import { createRepo } from './repo';
+import { Updater } from './updater';
 
 const here = (p: string) => fileURLToPath(new URL(p, import.meta.url));
 
@@ -12,6 +13,7 @@ const app = await buildApp({
   repo,
   uploadsDir: process.env.UPLOADS_DIR ?? here('../uploads'),
   webDist: process.env.SERVE_WEB === '1' && existsSync(webDist) ? webDist : undefined,
+  updater: process.env.DISABLE_UPDATES === '1' ? undefined : new Updater(here('../../..')),
   logger: true,
 });
 

@@ -10,6 +10,7 @@ import { createDesignBodySchema, createDocOfKind, formResponseBodySchema, saveDe
 import type { Repo } from './repo';
 import { CollabHub } from './collab';
 import { MediaSource, type MediaOptions, type MediaType } from './media';
+import type { Updater } from './updater';
 
 export interface AppOptions {
   repo: Repo;
@@ -19,7 +20,12 @@ export interface AppOptions {
   logger?: boolean;
   /** Banco de medios (Openverse); inyectable para pruebas. */
   media?: MediaOptions;
+  /** Actualización del proyecto desde GitHub (git pull); sin él, el botón Actualizar queda oculto. */
+  updater?: Updater;
 }
+
+/** Solo esta computadora puede actualizar el código (el proxy de Vite también llega desde 127.0.0.1). */
+const isLocal = (ip: string) => ip === '127.0.0.1' || ip === '::1' || ip === '::ffff:127.0.0.1';
 
 const UPLOAD_TYPES: Record<string, string> = {
   'image/png': '.png',
@@ -195,6 +201,23 @@ export async function buildApp(opts: AppOptions) {
 
   app.get<{ Params: { id: string; formId: string } }>('/api/designs/:id/forms/:formId/responses', async (req) => {
     return repo.listResponses(req.params.id, req.params.formId);
+  });
+
+  app.get('/api/update/status', async (req, reply) => {
+    if (!opts.updater || !isLocal(req.ip)) {
+      const reason = opts.updater ? 'Las actualizaciones solo se hacen desde la computadora donde corre Banva.' : 'Las actualizaciones están desactivadas en este servidor.';
+      return { enabled: false, reason, behind: 0, ahead: 0, commits: [], files: [], dirty: [], checkedAt: new Date().toISOString() };
+    }
+    return reply.header('cache-control', 'no-store').send(await opts.updater.status());
+  });
+
+  app.post('/api/update/pull', async (req, reply) => {
+    if (!opts.updater || !isLocal(req.ip)) return reply.code(403).send({ error: 'forbidden' });
+    try {
+      return await opts.updater.pull();
+    } catch (e) {
+      return reply.code(409).send({ error: (e as Error).message });
+    }
   });
 
   app.get('/ws', { websocket: true }, (socket) => hub.handle(socket));

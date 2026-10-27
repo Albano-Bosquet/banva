@@ -53,6 +53,13 @@ async function createDesign(): Promise<Design> {
   return res.json();
 }
 
+describe('Actualizar desde GitHub', () => {
+  it('sin Updater el botón queda desactivado y no se puede hacer pull', async () => {
+    expect((await app.inject('/api/update/status')).json()).toMatchObject({ enabled: false, behind: 0 });
+    expect((await app.inject({ method: 'POST', url: '/api/update/pull' })).statusCode).toBe(403);
+  });
+});
+
 describe('API de diseños', () => {
   it('health informa el almacenamiento', async () => {
     const res = await app.inject('/api/health');

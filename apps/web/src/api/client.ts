@@ -1,11 +1,14 @@
-import type { CreateDesignBody, Design, DesignDoc, DesignSummary, FormResponse, MediaResult } from '@trazo/shared';
+import type { CreateDesignBody, Design, DesignDoc, DesignSummary, FormResponse, MediaResult, PullResult, UpdateStatus } from '@trazo/shared';
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(path, {
     ...init,
     headers: init?.body && !(init.body instanceof FormData) ? { 'content-type': 'application/json', ...init.headers } : init?.headers,
   });
-  if (!res.ok) throw new Error(`${init?.method ?? 'GET'} ${path} → ${res.status}`);
+  if (!res.ok) {
+    const body = (await res.json().catch(() => null)) as { error?: unknown } | null;
+    throw new Error(typeof body?.error === 'string' ? body.error : `${init?.method ?? 'GET'} ${path} → ${res.status}`);
+  }
   return (res.status === 204 ? undefined : await res.json()) as T;
 }
 
@@ -31,4 +34,6 @@ export const api = {
   submitResponse: (designId: string, formId: string, values: FormResponse['values']) =>
     request<FormResponse>(`/api/designs/${designId}/forms/${formId}/responses`, { method: 'POST', body: JSON.stringify({ values }) }),
   listResponses: (designId: string, formId: string) => request<FormResponse[]>(`/api/designs/${designId}/forms/${formId}/responses`),
+  updateStatus: () => request<UpdateStatus>('/api/update/status', { cache: 'no-store' }),
+  pullUpdate: () => request<PullResult>('/api/update/pull', { method: 'POST' }),
 };

@@ -38,6 +38,13 @@ Si la API no está corriendo, la web pasa sola a **modo local**: guarda los dise
 - **Presentar** (`#/v/<id>`): pantalla completa con animaciones, video, audio y formularios que guardan respuestas.
 - Fotos y audio se buscan en Openverse (con respaldo en Wikimedia Commons) y se guardan en el servidor con su atribución.
 
+### Actualizar desde GitHub
+
+En el Inicio, el botón **Actualizar** revisa cada 10 segundos si hay commits nuevos en GitHub. Cuando los hay, se habilita y muestra los cambios (mensajes de los commits y archivos nuevos, modificados o eliminados). Al tocarlo, la API hace `git merge --ff-only` con la rama remota. Si cambiaron `package.json` o `package-lock.json`, corre `npm install`, y después la página se recarga con el código nuevo.
+
+- Nunca pisa trabajo local: si tus cambios chocan con los de GitHub, la actualización se cancela y lo avisa.
+- Solo funciona desde la computadora donde corre Banva (pedidos desde `127.0.0.1`). Para desactivarlo: `DISABLE_UPDATES=1`.
+
 ### Con PostgreSQL
 
 ```bash

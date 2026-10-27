@@ -6,6 +6,7 @@ import { TemplateGallery } from './templates/TemplateGallery';
 import { CreateBar, type CreateRequest } from './CreateBar';
 import { loadImage } from './canvas/useImage';
 import { Logo } from './Logo';
+import { UpdateButton } from './UpdateButton';
 
 const PRESETS: [string, number, number][] = [
   ['Post cuadrado', 1080, 1080],
@@ -77,7 +78,10 @@ export function Home({ onOpen }: { onOpen(id: string): void }) {
     <div className="home">
       <header className="home-head">
         <Logo size={36} wordmark />
-        <span className={`conn ${backend?.kind ?? 'pending'}`}>{backend ? (backend.kind === 'remote' ? 'Conectado al servidor' : 'Modo local, sin servidor') : 'Conectando…'}</span>
+        <div className="head-actions">
+          {backend?.kind === 'remote' && <UpdateButton />}
+          <span className={`conn ${backend?.kind ?? 'pending'}`}>{backend ? (backend.kind === 'remote' ? 'Conectado al servidor' : 'Modo local, sin servidor') : 'Conectando…'}</span>
+        </div>
       </header>
       {backend?.kind === 'local' && <div className="banner">No se encontró la API: los diseños se guardan solo en este navegador. Iniciá <code>npm run dev</code> en la raíz para usar el servidor y la colaboración.</div>}
       {error && <div className="banner">{error}</div>}

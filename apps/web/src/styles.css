@@ -565,3 +565,27 @@ button.small { padding: 5px 10px; font-size: 13px; }
 .preset-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
 .preset-grid button { flex-direction: column; gap: 4px; padding: 4px; font-size: 10px; min-width: 0; }
 .preset-thumb { display: block; width: 100%; aspect-ratio: 1; border-radius: 6px; background-size: cover; background-position: center; }
+
+/* ---------- Actualizar desde GitHub ---------- */
+.head-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: flex-end; }
+.update-controls { display: flex; align-items: center; gap: 4px; }
+.update-count { color: var(--accent-deep); font-weight: 600; }
+.update-panel { width: min(400px, calc(100vw - 32px)); max-height: min(70vh, 560px); overflow-y: auto; }
+.update-sub { margin: -6px 0 0; font-size: 13px; color: var(--ink-2); }
+.update-panel code { font-size: 12px; background: var(--surface-2); border: 1px solid var(--line); padding: 0 5px; border-radius: 5px; }
+.update-warn, .update-error { margin: 0; padding: 8px 10px; border-radius: 10px; font-size: 13px; }
+.update-warn { background: #fdf6e0; color: #5a4709; }
+.update-error { background: #fdecec; color: #8f2424; }
+.update-changes { display: flex; flex-direction: column; gap: 10px; }
+.update-commits { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.update-commits li { display: flex; flex-direction: column; gap: 2px; padding: 8px 0 8px 14px; border-left: 2px solid var(--accent-soft); position: relative; }
+.update-commits li::before { content: ''; position: absolute; left: -5px; top: 13px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.update-commits strong { font-weight: 600; font-size: 14px; }
+.update-commits small { color: var(--ink-3); font-size: 12px; }
+.update-files summary { cursor: pointer; font-size: 13px; color: var(--ink-2); }
+.update-files ul { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.update-files li { display: flex; gap: 8px; align-items: baseline; font-size: 12px; min-width: 0; }
+.fstat { flex: none; width: 76px; font-weight: 600; color: var(--ink-2); }
+.fstat.s-A { color: var(--accent-deep); }
+.fstat.s-D { color: var(--danger); }
+.fpath { overflow-wrap: anywhere; color: var(--ink); }
