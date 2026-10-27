@@ -74,9 +74,7 @@ input[type='color']::-webkit-color-swatch { border: none; border-radius: 50%; }
 
 /* ---------- Marca ---------- */
 .banva-brand { display: inline-flex; align-items: center; gap: 10px; }
-/* La imagen trae esquinas blancas: se agranda un 10,5 % y se recorta al círculo. */
-.banva-mark { position: relative; flex: none; display: block; border-radius: 50%; overflow: hidden; }
-.banva-mark img { position: absolute; width: 110.5%; height: 110.5%; left: -5.25%; top: -5.25%; display: block; }
+.banva-mark { flex: none; display: block; }
 .banva-word { font-size: 26px; font-weight: 750; font-stretch: 85%; letter-spacing: -0.035em; color: var(--rail); line-height: 1; }
 
 /* ---------- Home ---------- */
