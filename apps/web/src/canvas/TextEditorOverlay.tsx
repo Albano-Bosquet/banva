@@ -10,12 +10,24 @@ export function TextEditorOverlay({ el, zoom }: { el: TextElement; zoom: number 
   const ref = useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState(el.text);
   const committed = useRef(false);
+  const latest = useRef({ value, el });
+  latest.current = { value, el };
 
   useEffect(() => {
+    committed.current = false;
     const ta = ref.current;
-    if (!ta) return;
-    ta.focus();
-    ta.select();
+    if (ta) {
+      ta.focus();
+      ta.select();
+    }
+    // Un clic fuera (lienzo, otra página) cierra el editor sin que llegue el blur:
+    // se guarda igual al desmontar.
+    return () => {
+      if (committed.current) return;
+      committed.current = true;
+      const { value: text, el: cur } = latest.current;
+      if (text !== cur.text) useEditor.getState().updateElements([cur.id], { text }, { label: 'Editar texto' });
+    };
   }, []);
 
   useLayoutEffect(() => {

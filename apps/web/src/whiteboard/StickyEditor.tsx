@@ -7,9 +7,19 @@ export function StickyEditorOverlay({ el, zoom }: { el: StickyElement; zoom: num
   const ref = useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState(el.text);
   const done = useRef(false);
+  const latest = useRef({ value, el });
+  latest.current = { value, el };
   useEffect(() => {
+    done.current = false;
     ref.current?.focus();
     ref.current?.select();
+    // Si se cierra sin blur (clic en el lienzo), se guarda al desmontar.
+    return () => {
+      if (done.current) return;
+      done.current = true;
+      const { value: text, el: cur } = latest.current;
+      if (text !== cur.text) useEditor.getState().updateElements([cur.id], { text }, { label: 'Editar nota' });
+    };
   }, []);
   const finish = () => {
     if (done.current) return;

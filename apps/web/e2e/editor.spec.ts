@@ -141,3 +141,20 @@ test('crear un diseño desde una plantilla', async ({ page }) => {
   await openLayers(page);
   expect(await layerNames(page)).toEqual(['Equipo de producto · 2026', 'Presentación del proyecto', 'Rectángulo']);
 });
+
+test('editar texto y hacer clic fuera conserva el cambio', async ({ page }) => {
+  await newDesign(page);
+  await page.getByTestId('rail-text').click();
+  await page.getByText('Agregar un título').click();
+  const box = (await page.getByTestId('page-canvas').boundingBox())!;
+  await page.mouse.dblclick(box.x + box.width / 2, box.y + box.height / 2);
+  const editor = page.getByTestId('text-editor');
+  await expect(editor).toBeFocused();
+  await page.keyboard.press('End');
+  await page.keyboard.press('Backspace');
+  await page.keyboard.press('Backspace');
+  await page.mouse.click(box.x + 20, box.y + 20);
+  await expect(editor).toHaveCount(0);
+  await openLayers(page);
+  expect(await layerNames(page)).toEqual(['Agregá un títu']);
+});
