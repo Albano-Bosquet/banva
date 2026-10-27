@@ -32,6 +32,44 @@
   accent-color: var(--accent);
 }
 
+/* Modo oscuro: la misma paleta llevada al bosque de noche. Las páginas del diseño, documentos y hojas siguen siendo papel claro. */
+:root[data-theme='dark'] {
+  --ink: #e2efe5;
+  --ink-2: #a8c0b1;
+  --ink-3: #74907f;
+  --line: #2a4337;
+  --surface: #13271c;
+  --surface-2: #0c1d14;
+  --workspace: #08150e;
+  --accent: #1fb85c;
+  --accent-hover: #2bcc69;
+  --accent-ink: #04170b;
+  --accent-soft: #143d27;
+  --accent-deep: #8ce6a5;
+  --rail: #061810;
+  --rail-2: #04110b;
+  --rail-ink: #a8c4b2;
+  --danger: #ff6f6f;
+  --shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.3);
+  color-scheme: dark;
+}
+:root[data-theme='dark'] button:hover:not(:disabled) { border-color: #3a5a49; }
+:root[data-theme='dark'] button.ghost:hover:not(:disabled) { background: rgba(255, 255, 255, 0.07); }
+:root[data-theme='dark'] .banva-word { color: var(--ink); }
+:root[data-theme='dark'] .banner,
+:root[data-theme='dark'] .update-warn { background: #2e2710; border-color: #5c4d1c; color: #f0dc9a; }
+:root[data-theme='dark'] .update-error { background: #341616; color: #ffb3b3; }
+:root[data-theme='dark'] .page-canvas,
+:root[data-theme='dark'] .doc-page { box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5); }
+:root[data-theme='dark'] .sheet-cell,
+:root[data-theme='dark'] .cell-input,
+:root[data-theme='dark'] .site-view { color: #1f2430; color-scheme: light; }
+:root[data-theme='dark'] .custom-size input { color: #10291d; }
+:root[data-theme='dark'] .formula-bar input { background: var(--surface); }
+:root[data-theme='dark'] .sheet-corner { background: var(--surface); border-color: var(--line); }
+:root[data-theme='dark'] .sheet-colhead,
+:root[data-theme='dark'] .sheet-rowhead { border-color: var(--line); }
+
 * { box-sizing: border-box; }
 html, body, #root { margin: 0; height: 100%; }
 body { background: var(--surface-2); }

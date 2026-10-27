@@ -4,7 +4,10 @@ import { Home } from './Home';
 import { Editor } from './editor/Editor';
 import { Presenter } from './Presenter';
 import { SiteView } from './SiteView';
+import { initTheme } from './theme';
 import './styles.css';
+
+initTheme();
 
 /** Rutas por hash: #/ inicio, #/d/<id> editor, #/v/<id> presentación. */
 function useRoute() {

@@ -4,6 +4,7 @@ import { usePresence } from '../sync/session';
 import type { ExportFormat } from '../export/exporter';
 import { Icon } from './icons';
 import { Logo } from '../Logo';
+import { ThemeToggle } from '../theme';
 
 const STATUS_LABEL = {
   saved: 'Se guardaron todos los cambios',
@@ -57,6 +58,7 @@ export function TopBar({ onHome, toast, exportSlot, extra }: { onHome(): void; t
         onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLInputElement).blur()}
       />
       {extra}
+      <ThemeToggle />
       {(kind === 'design' || kind === 'video') && <button
         className="ghost"
         title="Presentar (pantalla completa, con animaciones, video, audio y formularios)"

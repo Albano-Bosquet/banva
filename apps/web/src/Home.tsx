@@ -7,6 +7,7 @@ import { CreateBar, type CreateRequest } from './CreateBar';
 import { loadImage } from './canvas/useImage';
 import { Logo } from './Logo';
 import { UpdateButton } from './UpdateButton';
+import { ThemeToggle } from './theme';
 
 const PRESETS: [string, number, number][] = [
   ['Post cuadrado', 1080, 1080],
@@ -79,6 +80,7 @@ export function Home({ onOpen }: { onOpen(id: string): void }) {
       <header className="home-head">
         <Logo size={36} wordmark />
         <div className="head-actions">
+          <ThemeToggle />
           {backend?.kind === 'remote' && <UpdateButton />}
           <span className={`conn ${backend?.kind ?? 'pending'}`}>{backend ? (backend.kind === 'remote' ? 'Conectado al servidor' : 'Modo local, sin servidor') : 'Conectando…'}</span>
         </div>

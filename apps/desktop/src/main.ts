@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell, type WebContents } from 'electron';
+import { app, BrowserWindow, nativeTheme, shell, type WebContents } from 'electron';
 import { createServer } from 'node:net';
 import { join } from 'node:path';
 import { buildApp } from '../../api/src/app';
@@ -77,7 +77,7 @@ function createWindow() {
     minHeight: 600,
     title: 'Banva',
     icon: iconPath(),
-    backgroundColor: '#f2f6f1',
+    backgroundColor: nativeTheme.shouldUseDarkColors ? '#0c1d14' : '#f2f6f1',
     autoHideMenuBar: true,
     show: false,
     webPreferences: { contextIsolation: true, sandbox: true },
