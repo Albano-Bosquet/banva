@@ -14,7 +14,9 @@
     "build": "npm run build -w @trazo/web",
     "test": "npm run test -w @trazo/shared && npm run test -w @trazo/web && npm run test -w @trazo/api",
     "test:e2e": "npm run test:e2e -w @trazo/web",
-    "typecheck": "npm run typecheck --workspaces --if-present"
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "desktop": "npm run build && npm run start -w @trazo/desktop",
+    "desktop:dist": "npm run build && npm run dist -w @trazo/desktop"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",

@@ -10,7 +10,7 @@ import { createDesignBodySchema, createDocOfKind, formResponseBodySchema, saveDe
 import type { Repo } from './repo';
 import { CollabHub } from './collab';
 import { MediaSource, type MediaOptions, type MediaType } from './media';
-import type { Updater } from './updater';
+import type { UpdateSource } from './updater';
 
 export interface AppOptions {
   repo: Repo;
@@ -21,7 +21,7 @@ export interface AppOptions {
   /** Banco de medios (Openverse); inyectable para pruebas. */
   media?: MediaOptions;
   /** Actualización del proyecto desde GitHub (git pull); sin él, el botón Actualizar queda oculto. */
-  updater?: Updater;
+  updater?: UpdateSource;
 }
 
 /** Solo esta computadora puede actualizar el código (el proxy de Vite también llega desde 127.0.0.1). */

@@ -4,7 +4,7 @@ import { api } from './api/client';
 import { Icon } from './editor/icons';
 
 const POLL_MS = 10_000;
-/** Lo que se aplicó en la última actualización, para mostrarlo después de recargar. */
+/** Lo que se aplicó en la última actualización, para mostrarlo después de recargar (o de reinstalar la app). */
 const LAST = 'banva:lastUpdate';
 
 const FILE_STATUS: Record<string, string> = { A: 'Nuevo', M: 'Modificado', D: 'Eliminado', R: 'Renombrado', C: 'Copiado' };
@@ -18,7 +18,7 @@ function ago(iso: string) {
 
 function readLast(): PullResult | null {
   try {
-    const raw = sessionStorage.getItem(LAST);
+    const raw = localStorage.getItem(LAST);
     return raw ? (JSON.parse(raw) as PullResult) : null;
   } catch {
     return null;
@@ -67,7 +67,11 @@ export function UpdateButton() {
 
   const pending = status.behind > 0;
   const dismissApplied = () => {
-    sessionStorage.removeItem(LAST);
+    try {
+      localStorage.removeItem(LAST);
+    } catch {
+      /* sin almacenamiento: solo se cierra */
+    }
     setApplied(null);
     setOpen(false);
   };
@@ -78,10 +82,15 @@ export function UpdateButton() {
     try {
       const r = await api.pullUpdate();
       if (!r.ok) throw new Error(r.error ?? 'No se pudo actualizar.');
-      sessionStorage.setItem(LAST, JSON.stringify(r));
-      // Vite y la API se reinician con el código nuevo; se recarga para usarlo.
-      setTimeout(() => location.reload(), 1500);
+      if (r.to === r.from) return void setStatus((s) => s && { ...s, behind: 0, commits: [], files: [] });
+      try {
+        localStorage.setItem(LAST, JSON.stringify(r));
+      } catch {
+        /* el aviso posterior es opcional */
+      }
       setApplied(r);
+      // App de escritorio: se cierra sola para instalar. Código fuente: Vite y la API ya tienen el código nuevo.
+      if (!r.restarting) setTimeout(() => location.reload(), 1500);
     } catch (e) {
       setError((e as Error).message);
       setOpen(true);
@@ -112,10 +121,11 @@ export function UpdateButton() {
         <div className="popover update-panel" data-testid="update-panel">
           {applied ? (
             <>
-              <h4>Banva se actualizó</h4>
+              <h4>{applied.restarting && status.current !== applied.to ? 'Instalando la actualización' : 'Banva se actualizó'}</h4>
               <p className="update-sub">
                 De <code>{applied.from}</code> a <code>{applied.to}</code>
-                {applied.installed && ', con dependencias reinstaladas'}.
+                {applied.installed && ', con dependencias reinstaladas'}
+                {applied.restarting && status.current !== applied.to ? '. Banva se cierra y se vuelve a abrir solo.' : '.'}
               </p>
               <Changes commits={applied.commits} files={applied.files} />
               <button onClick={dismissApplied}>Cerrar</button>

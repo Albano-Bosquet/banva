@@ -1,0 +1,36 @@
+appId: io.github.albano-bosquet.banva
+productName: Banva
+copyright: Copyright © 2026 Albano-Bosquet
+electronVersion: 44.7.0
+# Todo el código ya va empaquetado en dist/main.cjs: no hace falta copiar node_modules.
+npmRebuild: false
+directories:
+  output: release
+  buildResources: build
+files:
+  - dist/**
+  - '!dist/*.map'
+  - sql/**
+  - build/icon.png
+  - package.json
+  - '!node_modules/**'
+extraResources:
+  - from: ../web/dist
+    to: web
+win:
+  icon: build/icon.png
+  target: nsis
+nsis:
+  # Instalador de un clic: se instala para el usuario, sin permisos de administrador, y abre Banva al terminar.
+  oneClick: true
+  perMachine: false
+  runAfterFinish: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Banva
+  artifactName: Banva-Setup-${version}.${ext}
+publish:
+  provider: github
+  owner: Albano-Bosquet
+  repo: banva
+  releaseType: release

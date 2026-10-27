@@ -1,6 +1,12 @@
 import { execFile } from 'node:child_process';
 import type { PullResult, UpdateStatus } from '@trazo/shared';
 
+/** Fuente de actualizaciones: git en el código fuente, GitHub Releases en la app de escritorio. */
+export interface UpdateSource {
+  status(): Promise<UpdateStatus>;
+  pull(): Promise<PullResult>;
+}
+
 type Run = (cmd: string, args: string[], cwd: string) => Promise<string>;
 
 const run: Run = (cmd, args, cwd) =>
@@ -19,7 +25,7 @@ const RANGE = 'HEAD..@{u}';
  * Compara la copia local del proyecto con su rama remota (GitHub) y la actualiza con
  * `git merge --ff-only`, que nunca pisa trabajo local: si no puede avanzar, falla y lo informa.
  */
-export class Updater {
+export class Updater implements UpdateSource {
   private lastFetch = 0;
   private fetching: Promise<void> | null = null;
   private pulling = false;

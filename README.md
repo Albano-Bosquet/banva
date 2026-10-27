@@ -10,7 +10,17 @@ Está inspirado en las capacidades de Canva (ver `docs/ANALISIS_CANVA.md`), pero
 
 Publicado bajo la [licencia MIT](LICENSE).
 
-## Requisitos
+## Descargar
+
+Para usar Banva no hace falta instalar nada más: bajá **`Banva-Setup-<versión>.exe`** de la [última versión](https://github.com/Albano-Bosquet/banva/releases/latest), ejecutalo y listo. Se instala para tu usuario (sin permisos de administrador), crea accesos directos y abre Banva.
+
+- Tus diseños y archivos se guardan en `%APPDATA%\Banva`.
+- El botón **Actualizar** del Inicio avisa cuando hay una versión nueva, muestra qué cambió y la instala sola.
+- Windows puede mostrar "Windows protegió su PC" porque el instalador no está firmado: tocá **Más información → Ejecutar de todas formas**.
+
+## Desarrollo
+
+### Requisitos
 
 - Node.js 20+ (probado con 24.21)
 - Opcional: PostgreSQL 14+ (sin él, la API guarda en archivos JSON en `apps/api/data/`)
@@ -45,6 +55,19 @@ En el Inicio, el botón **Actualizar** revisa cada 10 segundos si hay commits nu
 - Nunca pisa trabajo local: si tus cambios chocan con los de GitHub, la actualización se cancela y lo avisa.
 - Solo funciona desde la computadora donde corre Banva (pedidos desde `127.0.0.1`). Para desactivarlo: `DISABLE_UPDATES=1`.
 
+En la app de escritorio, el mismo botón busca en [GitHub Releases](https://github.com/Albano-Bosquet/banva/releases): si hay una versión más nueva, muestra los commits y archivos entre las dos versiones, descarga el instalador y reinicia Banva para instalarlo.
+
+### App de escritorio (Electron)
+
+`apps/desktop` empaqueta todo en un `.exe`: la API corre dentro de la app y sirve la web ya compilada en `http://127.0.0.1:47821`.
+
+```bash
+npm run desktop        # compila la web y abre la app de escritorio
+npm run desktop:dist   # genera apps/desktop/release/Banva-Setup-<versión>.exe y latest.yml
+```
+
+Para publicar una versión nueva: subí `version` en `apps/desktop/package.json`, generá el instalador y creá un release `v<versión>` en GitHub con `Banva-Setup-<versión>.exe`, su `.blockmap` y `latest.yml`. Las apps instaladas lo detectan desde el botón **Actualizar**.
+
 ### Con PostgreSQL
 
 ```bash
@@ -75,6 +98,7 @@ npm run typecheck
 packages/shared   modelo del documento (Zod), fábricas de elementos, protocolo WS
 apps/web          React 19 + Vite + Zustand/Immer + Konva (react-konva) + pdf-lib
 apps/api          Fastify 5 + WebSocket + PostgreSQL/archivos
+apps/desktop      Electron + electron-builder (instalador NSIS) + electron-updater
 docs/             análisis, arquitectura, funcionalidades, plan y progreso
 ```
 

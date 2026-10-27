@@ -39,5 +39,7 @@ export interface PullResult {
   files: UpdateFile[];
   /** Se corrió `npm install` porque cambiaron las dependencias. */
   installed: boolean;
+  /** Versión de escritorio: se descargó el instalador y Banva se cierra para instalarlo. */
+  restarting?: boolean;
   error?: string;
 }

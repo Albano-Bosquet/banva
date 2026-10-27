@@ -1,0 +1,22 @@
+{
+  "name": "@trazo/desktop",
+  "productName": "Banva",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Banva: alternativa gratis y open source a Canva (app de escritorio)",
+  "author": "Albano-Bosquet",
+  "license": "MIT",
+  "main": "dist/main.cjs",
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "node build.mjs && electron .",
+    "dist": "node build.mjs && electron-builder --win nsis --publish never",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "electron": "44.7.0",
+    "electron-builder": "26.17.0",
+    "electron-updater": "6.8.10",
+    "esbuild": "0.28.2"
+  }
+}
