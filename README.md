@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="apps/web/public/banva-logo.webp" alt="Banva" width="120" />
+  <img src="apps/web/public/banva-logo.png" alt="Banva" width="120" />
 </p>
 
 # Banva
