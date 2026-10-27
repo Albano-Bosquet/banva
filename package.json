@@ -1,0 +1,23 @@
+{
+  "name": "trazo",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Editor de diseño web propio (inspirado en las capacidades observadas de editores tipo Canva).",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c blue,green \"npm:dev -w @trazo/api\" \"npm:dev -w @trazo/web\"",
+    "dev:web": "npm run dev -w @trazo/web",
+    "dev:api": "npm run dev -w @trazo/api",
+    "build": "npm run build -w @trazo/web",
+    "test": "npm run test -w @trazo/shared && npm run test -w @trazo/web && npm run test -w @trazo/api",
+    "test:e2e": "npm run test:e2e -w @trazo/web",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3"
+  }
+}
