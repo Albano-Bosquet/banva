@@ -20,6 +20,19 @@ Está inspirado en las capacidades de Canva (ver `docs/ANALISIS_CANVA.md`), pero
 
 Publicado bajo la [licencia MIT](LICENSE).
 
+## Capturas
+
+![Inicio de Banva](docs/capturas/inicio.png)
+
+| | |
+|---|---|
+| ![Editor con una presentación](docs/capturas/editor-presentacion.png) | ![Editor con un flyer](docs/capturas/editor-flyer.png) |
+| **Presentaciones** con plantillas | **Flyers, carteles y posts** |
+| ![Editor con un currículum](docs/capturas/editor-curriculum.png) | ![Editor de documentos](docs/capturas/doc.png) |
+| **Currículums** y documentos para imprimir | **Doc**: editor de texto con menú "/" |
+| ![Hoja de cálculo](docs/capturas/hoja-de-calculo.png) | ![Editor en modo oscuro](docs/capturas/editor-oscuro.png) |
+| **Hoja de cálculo** con fórmulas | **Modo oscuro** |
+
 ## Descargar
 
 Para usar Banva no hace falta instalar nada más: bajá **`Banva-Setup-<versión>.exe`** de la [última versión](https://github.com/Albano-Bosquet/banva/releases/latest), ejecutalo y listo. Se instala para tu usuario (sin permisos de administrador), crea accesos directos y abre Banva.
