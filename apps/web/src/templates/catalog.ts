@@ -399,9 +399,9 @@ tpl('cartel-festival', 'poster', 'Cartel de festival', 'festival música cartel 
     S(c, 'ellipse', 0.1, 0.06, 0.8, 0.566, '#ff6b4a'),
     S(c, 'semicircle', 0.1, 0.26, 0.8, 0.283, '#ffc145'),
     S(c, 'triangle', 0.3, 0.2, 0.4, 0.2, '#2bb3a3'),
-    T(c, 'SONORA', 0.06, 0.66, 0.88, { size: 26, font: 'Bebas Neue', color: '#ffffff', align: 'center', ls: 1 }),
-    T(c, 'FESTIVAL DE MÚSICA INDEPENDIENTE', 0.06, 0.8, 0.88, { size: 3.4, font: 'Montserrat', bold: true, color: '#ffc145', align: 'center', ls: 0.6 }),
-    T(c, '14 · 15 · 16 de marzo — Predio Ferial', 0.06, 0.86, 0.88, { size: 3.4, color: '#c9cede', align: 'center' }),
+    T(c, 'SONORA', 0.06, 0.635, 0.88, { size: 20, font: 'Bebas Neue', color: '#ffffff', align: 'center', ls: 1 }),
+    T(c, 'FESTIVAL DE MÚSICA INDEPENDIENTE', 0.06, 0.81, 0.88, { size: 3.4, font: 'Montserrat', bold: true, color: '#ffc145', align: 'center', ls: 0.6 }),
+    T(c, '14 · 15 · 16 de marzo — Predio Ferial', 0.06, 0.865, 0.88, { size: 3.4, color: '#c9cede', align: 'center' }),
   ]),
 ]);
 
